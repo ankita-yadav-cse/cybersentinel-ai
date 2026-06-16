@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CyberSentinel AI SOC Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    margin:0;
+    padding:20px;
+    font-family:'Segoe UI',sans-serif;
+    background:#0f172a;
+    color:white;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#00e5ff;
+}
+
+.clock{
+    color:#94a3b8;
+    margin-top:10px;
+}
+
+.toggle-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    background:#00e5ff;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.dark-mode{
+    background:#f4f6f9 !important;
+    color:black !important;
+}
+
+.dark-mode .card{
+    background:white !important;
+    color:black !important;
+}
+
+.dark-mode .stat-card{
+    background:#e5e7eb !important;
+    color:black !important;
+}
+
+.card{
+    width:90%;
+    margin:15px auto;
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,229,255,.15);
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.stat-card{
+    width:200px;
+    background:#111827;
+    padding:15px;
+    border-radius:12px;
+    border-left:5px solid #00e5ff;
+}
+
+.stat-card h2{
+    color:#00e5ff;
+}
+
+textarea{
+    width:80%;
+    height:120px;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    resize:none;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#00e5ff;
+    font-weight:bold;
+}
+
+.cyber-btn{
+    display:inline-block;
+    padding:10px 15px;
+    background:#ff4d4d;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+.alert{
+    background:#dc2626;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.risk-bar{
+    width:100%;
+    height:20px;
+    background:#374151;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.risk-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(
+        90deg,
+        #00e676,
+        #ffeb3b,
+        #ff4d4d
+    );
+}
+
+.history-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-table th{
+    background:#00e5ff;
+    color:black;
+    padding:10px;
+}
+
+.history-table td{
+    padding:10px;
+    border-bottom:1px solid #334155;
+}
+
+.history-table tr:hover{
+    background:#273449;
+}
+
+.spam{
+    color:#ff4d4d;
+    font-weight:bold;
+}
+
+.ham{
+    color:#00e676;
+    font-weight:bold;
+}
+
+canvas{
+    max-width:400px;
+    margin:auto;
+}
+.result-badge{
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.result-spam{
+    background:#ff4d4d;
+    color:white;
+}
+
+.result-ham{
+    background:#00c853;
+    color:white;
+}
+
+.warning{
+    color:#ffeb3b;
+    font-weight:bold;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+.risk-fill{
+    height:100%;
+    width:0%;
+    transition:width 1.5s ease;
+    background:linear-gradient(
+        90deg,
+        #00e676,
+        #ffeb3b,
+        #ff4d4d
+    );
+}
+
+</style>
+</head>
+
+<body>
+  <button class="theme-toggle">
+    🌙 Dark Mode
+</button>
+
+<div class="header">
+
+<h1>🛡 CyberSentinel AI SOC Dashboard</h1>
+
+<div class="clock" id="clock"></div>
+
+
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<h3>Total Messages</h3>
+<h2>{{ total_messages }}</h2>
+</div>
+
+<div class="stat-card">
+<h3>Spam Detected</h3>
+<h2>{{ total_spam }}</h2>
+</div>
+
+<div class="stat-card">
+<h3>Safe Messages</h3>
+<h2>{{ total_ham }}</h2>
+</div>
+
+<div class="stat-card">
+    <h3>Threat Alerts</h3>
+    <h2>{{ threat_alerts }}</h2>
+</div>
+
+<div class="stat-card">
+<h3>Risk Score</h3>
+<h2>{{ risk_score }}/100</h2>
+</div>
+
+</div>
+
+<div style="text-align:center; margin:20px 0;">
+    
+    <a href="https://cybercrime.gov.in"
+       target="_blank"
+       class="cyber-btn">
+       🚨 National Cyber Crime Reporting Portal
+    </a>
+
+    <a href="/export-csv"
+       class="cyber-btn"
+       style="margin-left:10px; background:#00e5ff; color:black;">
+       📊 Export History CSV
+    </a>
+
+</div>
+
+<div class="card">
+
+<form method="POST">
+
+<textarea
+name="message"
+placeholder="Enter message, URL, email or phone number..."
+required></textarea>
+
+<br><br>
+
+<button type="submit">
+Check Message
+</button>
+
+</form>
+
+</div>
+
+{% if prediction %}
+
+<div class="card">
+
+<h2>Result:
+<span class="{% if prediction=='Spam' %}spam{% else %}ham{% endif %}">
+{{ prediction }}
+</span>
+</h2>
+
+<p><b>Spam:</b> {{ spam }}%</p>
+
+<p><b>Ham:</b> {{ ham }}%</p>
+
+<p><b>Risk Score:</b> {{ risk_score }}/100</p>
+
+<p>
+<b>Severity:</b>
+<span class="
+{% if severity=='Critical' %}
+spam
+{% elif severity=='High' %}
+spam
+{% elif severity=='Medium' %}
+warning
+{% else %}
+ham
+{% endif %}
+">
+{{ severity }}
+</span>
+</p>
+
+<p><b>Threat Alerts:</b> {{ threat_alerts }}</p>
+
+<p><b>Category:</b> {{ category }}</p>
+</div>
+
+{% endif %}
+
+{% if risk_score >= 70 %}
+
+<div class="card alert">
+🚨 HIGH RISK THREAT DETECTED
+</div>
+
+{% endif %}
+
+<div class="card">
+
+<h3>Risk Level</h3>
+
+<div class="risk-bar">
+<div id="riskFill" class="risk-fill"></div>
+</div>
+
+<p>{{ risk_score }}/100</p>
+
+</div>
+
+<div class="card">
+
+<h3>⚠ AI Explanation</h3>
+
+<p>{{ explanation }}</p>
+
+</div>
+
+<div class="card">
+
+<h3>Detected Information</h3>
+
+<p><b>URLs:</b> {{ urls if urls else "No URLs Found" }}</p>
+
+<p><b>Emails:</b> {{ emails if emails else "No Emails Found" }}</p>
+
+<p><b>Phones:</b> {{ phones if phones else "No Phone Numbers Found" }}</p>
+
+</div>
+
+<div class="card">
+<h3>🌐 URL Reputation Checker</h3>
+
+{% if urls %}
+
+{% for url in urls %}
+
+<p>
+<b>{{ url }}</b>
+
+{% if "bit.ly" in url
+or "tinyurl" in url
+or ".xyz" in url
+or ".tk" in url %}
+
+<span class="spam">
+❌ Suspicious URL
+</span>
+
+{% else %}
+
+<span class="ham">
+✅ Appears Safe
+</span>
+
+{% endif %}
+</p>
+
+{% endfor %}
+
+{% else %}
+
+<p>No URLs Found</p>
+
+{% endif %}
+
+<div class="card">
+
+<h3>Spam vs Ham Distribution</h3>
+
+<canvas id="chart"></canvas>
+
+</div>
+<div class="card">
+
+<h3>📜 Message History</h3>
+
+<div class="table-container">
+
+<table class="history-table">
+
+<tr>
+<th>Message</th>
+<th>Result</th>
+<th>Spam%</th>
+<th>Ham%</th>
+<th>Risk</th>
+<th>Time</th>
+</tr>
+
+{% if history %}
+
+{% for row in history %}
+
+<tr>
+
+<td>{{ row[0] }}</td>
+
+<td>
+<span class="result-badge {% if row[1]=='Spam' %}result-spam{% else %}result-ham{% endif %}">
+{{ row[1] }}
+</span>
+</td>
+
+<td>{{ row[2] }}</td>
+<td>{{ row[3] }}</td>
+<td>{{ row[4] }}</td>
+<td>{{ row[5] }}</td>
+
+</tr>
+
+{% endfor %}
+{% else %}
+
+<tr>
+<td colspan="6">
+No History Available
+</td>
+</tr>
+
+{% endif %}
+</table>
+
+</div>
+
+</div>
+<script>
+// Clock
+setInterval(function(){
+    const clock=document.getElementById("clock");
+    if(clock){
+        clock.innerHTML=new Date().toLocaleString();
+    }
+},1000);
+
+// Risk Bar
+var riskFill=document.getElementById("riskFill");
+
+if(riskFill){
+    riskFill.style.width="{{ risk_score|default(0,true) }}%";
+}
+
+// Pie Chart
+var chartCanvas=document.getElementById("chart");
+
+if(chartCanvas){
+
+    var chartData =
+    JSON.parse('{{ chart_data|default("[0,0]")|safe }}');
+
+    new Chart(chartCanvas,{
+        type:"doughnut",
+        data:{
+            labels:["Spam","Ham"],
+            datasets:[{
+                data:chartData,
+                backgroundColor:[
+                    "#ff4d4d",
+                    "#00e676"
+                ]
+            }]
+        },
+        options:{
+    responsive:true,
+    cutout:"70%",
+    plugins:{
+        legend:{
+            position:"bottom"
+        }
+    }
+}
+    });
+}
+// Dark / Light Mode Toggle
+const themeBtn = document.querySelector(".theme-toggle");
+
+if (themeBtn) {
+
+    themeBtn.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark-mode");
+
+        if (document.body.classList.contains("dark-mode")) {
+
+            themeBtn.innerHTML = "☀ Light Mode";
+
+        } else {
+
+            themeBtn.innerHTML = "🌙 Dark Mode";
+
+        }
+
+    });
+
+}
+</script>
+
+</body>
+</html>

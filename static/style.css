@@ -1,0 +1,243 @@
+/* ================= SOC DASHBOARD ================= */
+
+body{
+    margin:0;
+    padding-top:20px;
+    font-family:'Segoe UI',sans-serif;
+    background:#0f172a;
+    color:white;
+    transition:all .3s ease;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#00e5ff;
+    margin-bottom:10px;
+}
+
+.clock{
+    color:#94a3b8;
+    font-size:15px;
+}
+
+/* ================= DARK MODE BUTTON ================= */
+
+.theme-toggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:99999;
+
+    padding:12px 20px;
+
+    background:#00d4ff;
+    color:#000;
+
+    border:2px solid white;
+    border-radius:15px;
+
+    font-weight:bold;
+    font-size:16px;
+
+    cursor:pointer;
+
+    box-shadow:0 0 15px rgba(0,212,255,0.5);
+
+    transition:all 0.3s ease;
+}
+
+.theme-toggle:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= CYBER PORTAL ================= */
+
+.cyber-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 15px;
+    background:#ff4d4d;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.cyber-btn:hover{
+    opacity:.9;
+}
+
+/* ================= CARD ================= */
+
+.card{
+    width:90%;
+    margin:15px auto;
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,229,255,.15);
+}
+
+/* ================= KPI ================= */
+
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.stat-card{
+    width:200px;
+    background:#111827;
+    padding:15px;
+    border-radius:12px;
+    border-left:5px solid #00e5ff;
+}
+
+.stat-card h3{
+    margin:0;
+    font-size:15px;
+}
+
+.stat-card h2{
+    margin-top:10px;
+    color:#00e5ff;
+}
+
+/* ================= INPUT ================= */
+
+textarea{
+    width:80%;
+    height:120px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    resize:none;
+}
+
+button{
+    padding:12px 20px;
+    background:#00e5ff;
+    color:black;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+/* ================= ALERT ================= */
+
+.alert{
+    background:#dc2626;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* ================= RISK BAR ================= */
+
+.risk-bar{
+    width:100%;
+    height:20px;
+    background:#374151;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.risk-fill{
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #00e676,
+        #ffeb3b,
+        #ff4d4d
+    );
+    transition:width .5s ease;
+}
+
+/* ================= TABLE ================= */
+
+.history-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-table th{
+    background:#00e5ff;
+    color:black;
+    padding:10px;
+}
+
+.history-table td{
+    padding:10px;
+    border-bottom:1px solid #334155;
+}
+
+.history-table tr:hover{
+    background:#273449;
+}
+
+/* ================= RESULT COLORS ================= */
+
+.spam{
+    color:#ff4d4d;
+    font-weight:bold;
+}
+
+.ham{
+    color:#00e676;
+    font-weight:bold;
+}
+
+/* ================= PIE CHART ================= */
+
+canvas{
+    max-width:400px;
+    max-height:400px;
+    margin:auto;
+}
+
+/* ================= DARK MODE ================= */
+
+.dark-mode{
+    background:#f4f6f9 !important;
+    color:#111 !important;
+}
+
+.dark-mode .card{
+    background:white !important;
+    color:black !important;
+}
+
+.dark-mode .stat-card{
+    background:#e5e7eb !important;
+    color:black !important;
+}
+
+.dark-mode .history-table th{
+    background:#00e5ff !important;
+    color:black !important;
+}
+
+.dark-mode .history-table td{
+    color:black !important;
+}
+
+.dark-mode textarea{
+    background:white !important;
+    color:black !important;
+    border:1px solid #ccc;
+}
