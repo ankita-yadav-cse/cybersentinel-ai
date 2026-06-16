@@ -1,6 +1,38 @@
-venv/
-__pycache__/
-*.pyc
+# Custom project files
 history.db
 history.csv
+
+# Python cache
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Virtual environments
 .env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Test/cache files
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Flask
+instance/
+.webassets-cache
+
+# Jupyter
+.ipynb_checkpoints
+
+# VS Code temp file
+tempCodeRunnerFile.py
