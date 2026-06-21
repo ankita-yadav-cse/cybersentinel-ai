@@ -3,9 +3,7 @@
 
 ## Overview
 
-CyberSentinel AI is a Machine Learning-based web application that detects spam and potentially fraudulent text messages. The system analyzes user-entered messages and classifies them as Spam or Ham (Legitimate Message) using the Naive Bayes algorithm and TF-IDF vectorization.
-
-The project aims to improve cyber awareness by helping users identify suspicious messages, phishing attempts, and online scams through an interactive Flask-based dashboard.
+CyberSentinel AI is a Machine Learning-based web application that detects spam and potentially fraudulent text messages. The system analyzes user-entered messages and classifies them as **Spam** or **Ham (Legitimate Message)** using the **Naive Bayes Algorithm** and **TF-IDF Vectorization**. The project aims to improve cyber awareness by helping users identify suspicious messages, phishing attempts, and online scams through an interactive Flask-based dashboard.
 
 ---
 
@@ -146,21 +144,6 @@ http://127.0.0.1:5000
 
 ---
 
-## Author
-
-Ankita Yadav
-
-B.Tech Computer Science Engineering
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
-
-# cybersentinel-ai
-An AI-powered cyber fraud and spam detection platform that analyzes messages, detects scam attempts, calculates fraud risk scores, performs URL reputation checks, generates security reports, and provides cyber safety guidance through an interactive Flask-based dashboard
 ## Screenshots
 
 ### Home Page
@@ -174,4 +157,20 @@ An AI-powered cyber fraud and spam detection platform that analyzes messages, de
 
 ### Message History & Analytics
 ![Message History](screenshots/message-history.png)
+
+---
+
+## Author
+
+Ankita Yadav
+
+B.Tech Computer Science Engineering
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+
 
