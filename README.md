@@ -1,3 +1,4 @@
+
 # CyberSentinel AI
 
 ## Overview
@@ -156,4 +157,21 @@ B.Tech Computer Science Engineering
 ## License
 
 This project is licensed under the MIT License.
+
+
+# cybersentinel-ai
+An AI-powered cyber fraud and spam detection platform that analyzes messages, detects scam attempts, calculates fraud risk scores, performs URL reputation checks, generates security reports, and provides cyber safety guidance through an interactive Flask-based dashboard
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/home-page.png)
+
+### Prediction Result
+![Prediction Result](screenshots/prediction-result.png)
+
+### Threat Analysis & URL Detection
+![Threat Analysis](screenshots/threat-analysis.png)
+
+### Message History & Analytics
+![Message History](screenshots/message-history.png)
 
